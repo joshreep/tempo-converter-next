@@ -1,14 +1,16 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+
+import BottomNavBar from '@/components/BottomNavBar';
+import { SettingsProvider } from '@/contexts/settings';
+import theme from '@/theme';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import classNames from 'classnames';
+import type { Metadata } from 'next';
+import { Geist } from 'next/font/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
@@ -17,19 +19,25 @@ export const metadata: Metadata = {
   description: 'A simple tool to convert bpm to ms with tap tempo.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className=" min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-          <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-            {children}
-          </main>
-        </div>
+      <body className={classNames(geistSans.variable, 'flex h-svh flex-col antialiased')}>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <SettingsProvider>
+              {/* <main className="flex grow flex-col items-center justify-center gap-8 p-8 pb-[calc(--spacing(8)+56px)] font-[family-name:var(--font-geist-sans)] sm:p-20"> */}
+              <main className="mb-[56px] flex grow flex-col items-center justify-center gap-8 p-8 font-[family-name:var(--font-geist-sans)] sm:p-20">
+                {children}
+              </main>
+              <BottomNavBar />
+            </SettingsProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

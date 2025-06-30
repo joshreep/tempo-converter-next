@@ -2,6 +2,8 @@
 
 import SubdivisionGrid from '@/components/SubdivisionGrid';
 import useTapTempoSubDivision from '@/hooks/useTapTempoSubDivision';
+import TouchAppIcon from '@mui/icons-material/TouchAppTwoTone';
+import IconButton from '@mui/material/IconButton';
 import { ChangeEventHandler } from 'react';
 
 export default function Home() {
@@ -13,23 +15,22 @@ export default function Home() {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">Tempo Converter</h1>
-      <button
-        type="button"
-        className="rounded-full text-3xl h-35 w-35 text-blue-600 border-blue-600 border-4 active:bg-blue-200 dark:active:bg-blue-950 active:scale-110 transition-[scale] duration-75 ease-out"
-        style={{ userSelect: 'none' }}
-        onTouchStart={handleTap}
-      >
-        TAP
-      </button>
-      <input
-        type="number"
-        pattern="\d*"
-        className="text-6xl text-center w-48"
-        placeholder="BPM"
-        value={bpm}
-        onChange={handleBpmChange}
-      />
+      <div className="flex flex-col items-center">
+        <h1 className="text-3xl font-semibold">Tempo Converter</h1>
+        <IconButton color="primary" className="h-40 w-40" onTouchStart={handleTap}>
+          <TouchAppIcon fontSize="large" sx={{ fontSize: '4rem' }} />
+        </IconButton>
+        <input
+          id="bpm"
+          type="number"
+          pattern="\d*"
+          className="w-48 text-center text-6xl"
+          placeholder="BPM"
+          value={bpm === 0 ? '' : bpm}
+          onChange={handleBpmChange}
+          onFocus={() => setBpm(0)}
+        />
+      </div>
       <SubdivisionGrid subdivisions={subdivisions} />
     </>
   );

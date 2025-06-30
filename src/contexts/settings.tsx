@@ -1,13 +1,19 @@
+'use client';
+
 import { DEFAULT_SETTINGS, SubdivisionName } from '@/constants/subdivisions';
 import usePersistedState from '@/hooks/usePersistedState';
 import { createContext, FC, PropsWithChildren, use, useCallback } from 'react';
 
-type Settings = Record<SubdivisionName, boolean>;
+export type Settings = {
+  enabledSubdivisions: SubdivisionName[];
+  defaultSubdivision: SubdivisionName;
+};
 
-const SettingsContext = createContext<{
-  settings: Settings;
-  setSettings: (newValue: Partial<Settings>) => void;
-}>({ settings: DEFAULT_SETTINGS, setSettings: () => undefined });
+const SettingsContext = createContext<
+  Settings & {
+    setSettings: (newValue: Partial<Settings>) => void;
+  }
+>({ ...DEFAULT_SETTINGS, setSettings: () => undefined });
 
 export function useSettings() {
   return use(SettingsContext);
@@ -27,7 +33,7 @@ export const SettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 
   return (
-    <SettingsContext.Provider value={{ settings, setSettings: handleSetSettings }}>
+    <SettingsContext.Provider value={{ ...settings, setSettings: handleSetSettings }}>
       {children}
     </SettingsContext.Provider>
   );

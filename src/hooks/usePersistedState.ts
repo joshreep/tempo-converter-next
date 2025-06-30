@@ -1,21 +1,20 @@
 'use client';
 
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 
 export default function usePersistedState<T>(key: string, initialValue: T) {
-  const getValueFromStorage = useCallback(() => {
-    if (typeof window === 'undefined') return initialValue;
+  const [value, setValue] = useState(initialValue);
 
+  useEffect(() => {
     try {
       const storedValue = localStorage.getItem(key);
-      return storedValue ? (JSON.parse(storedValue) as T) : initialValue;
+      if (storedValue != null) {
+        setValue(JSON.parse(storedValue) as T);
+      }
     } catch (error) {
       console.error(`Error retrieving value for key "${key}" from localStorage:`, error);
-      return initialValue;
     }
-  }, [initialValue, key]);
-
-  const [value, setValue] = useState(getValueFromStorage);
+  }, [key]);
 
   const setValueToStorage: Dispatch<SetStateAction<T>> = useCallback(
     (newValue) => {

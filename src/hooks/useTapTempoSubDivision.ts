@@ -24,7 +24,7 @@ export default function useTapTempoSubDivision(dataSetSize = 5) {
   };
 }
 
-function round(number: number, decimalPlaces = 1) {
+function round(number: number, decimalPlaces = 0.1) {
   return Math.round(number * (10 * decimalPlaces)) / (10 * decimalPlaces);
 }
 
@@ -42,5 +42,5 @@ export function getMSValue(bpm: number, subdivision: SubdivisionName) {
 }
 
 export function getBPMValue(ms: number, subdivision: SubdivisionName) {
-  return round(MILLISECONDS_PER_MINUTE / ms / SUBDIVISIONS[subdivision], 0.1);
+  return round(MILLISECONDS_PER_MINUTE / ms / SUBDIVISIONS[subdivision]);
 }
