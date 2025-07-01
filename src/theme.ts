@@ -7,6 +7,10 @@ const theme = createTheme({
   typography: {
     fontFamily: 'var(--font-geist-sans)',
   },
+  colorSchemes: {
+    light: true,
+    dark: true,
+  },
 });
 
 export default theme;

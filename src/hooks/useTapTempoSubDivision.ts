@@ -1,8 +1,9 @@
 'use client';
 
 import { SubdivisionName, SUBDIVISIONS } from '@/constants/subdivisions';
-import useTapTempo from './useTapTempo';
+import { useCallback } from 'react';
 import useEnabledSubdivisions, { EnabledSubdivisions } from './useEnabledSubdivisions';
+import useTapTempo from './useTapTempo';
 
 export const MILLISECONDS_PER_MINUTE = 60 * 1000;
 
@@ -12,9 +13,12 @@ export default function useTapTempoSubDivision(dataSetSize = 5) {
 
   const bpm = MILLISECONDS_PER_MINUTE / milliseconds;
 
-  const setBpm = (bpm: number) => {
-    setMilliseconds(MILLISECONDS_PER_MINUTE / bpm);
-  };
+  const setBpm = useCallback(
+    (bpm: number) => {
+      setMilliseconds(MILLISECONDS_PER_MINUTE / bpm);
+    },
+    [setMilliseconds],
+  );
 
   return {
     handleTap,

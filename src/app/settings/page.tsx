@@ -95,7 +95,6 @@ export default function SettingsPage() {
           value={defaultSubdivision ?? ''}
           label="Primary Subdivision"
           onChange={(event) => {
-            debugger;
             setSettings({ defaultSubdivision: event.target.value as SubdivisionName });
           }}
         >
