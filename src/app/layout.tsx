@@ -1,6 +1,7 @@
 import './globals.css';
 
 import BottomNavBar from '@/components/BottomNavBar';
+import InstallPrompt from '@/components/InstallPrompt';
 import { SettingsProvider } from '@/contexts/settings';
 import theme from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
@@ -30,9 +31,9 @@ export default async function RootLayout({
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <SettingsProvider>
-              {/* <main className="flex grow flex-col items-center justify-center gap-8 p-8 pb-[calc(--spacing(8)+56px)] font-[family-name:var(--font-geist-sans)] sm:p-20"> */}
               <main className="mb-[56px] flex grow flex-col items-center justify-center gap-8 p-8 font-[family-name:var(--font-geist-sans)] sm:p-20">
                 {children}
+                <InstallPrompt />
               </main>
               <BottomNavBar />
             </SettingsProvider>
