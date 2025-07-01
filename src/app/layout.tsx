@@ -7,7 +7,7 @@ import theme from '@/theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import classNames from 'classnames';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist } from 'next/font/google';
 
 const geistSans = Geist({
@@ -16,8 +16,14 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'Tempo Converter',
+  title: { default: 'Tempo Converter', template: '%s | Tempo Converter' },
   description: 'A simple tool to convert bpm to ms with tap tempo.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default async function RootLayout({
