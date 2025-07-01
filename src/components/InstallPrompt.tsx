@@ -22,15 +22,19 @@ const isIOS =
 const isStandalone =
   typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const Transition: FC<TransitionProps & { children: ReactElement<unknown>; ref: Ref<unknown> }> = (
   props,
 ) => <Slide direction="up" {...props} />;
+
+const isTestFlagEnabled = process.env.NEXT_PUBLIC_TEST_INSTALL_PROMPT === 'true';
 
 const InstallPrompt: FC = () => {
   return (
     <Dialog
       fullScreen
-      open={!isStandalone}
+      open={isTestFlagEnabled || (isProd && !isStandalone)}
       slots={{ transition: Transition }}
       slotProps={{ paper: { className: 'justify-center' } }}
     >
